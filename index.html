@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TailwindCSs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="bg-backgroundColor">
+    <header
+      class="container mx-auto flex justify-between content-center md:py-12 pt-6 pb-26px font-main border-b border-solid border-black"
+    >
+      <div class="flex gap-x-1 md:relative">
+        <img
+          src="/icons/logomark.svg"
+          alt=""
+          class="w-logomarkMobile md:w-logomarkDecktop h-logomarkMobile md:h-logomarkDecktop md:absolute md:left-[-57px]"
+        />
+        <img
+          src="/icons/logotype.svg"
+          alt=""
+          class="w-logotypeMobile md:w-logotypeDecktop h-logotypeMobile md:h-logotypeDecktop"
+        />
+      </div>
+      <div class="flex content-center items-center gap-x-4">
+        <div class="flex content-center items-center">
+          <a
+            href=""
+            class="text-mainSize font-semibold leading-main text-center md:text-desktopBig md:leading-desktopBig"
+            >About Us</a
+          >
+        </div>
+        <button
+          class="bg-black p-3 rounded text-mainSize font-bold leading-main text-white md:text-desktopBig md:leading-desktopBig"
+        >
+          Sing Up
+        </button>
+      </div>
+    </header>
+    <main
+      class="container mx-auto flex flex-col gap-y-12 font-main mt-6 md:mt-[100px]"
+    >
+      <div
+        class="bg-black rounded flex flex-row items-center justify-between p-26px"
+      >
+        <div class="flex items-center gap-x-6">
+          <div class="flex flex-row items-center">
+            <img src="icons/alert-circle.svg" alt="" class="mr-2" />
+            <h2 class="text-lightSand text-bigSize font-bold leading-5">
+              ALPHA
+            </h2>
+          </div>
+
+          <div>
+            <h3 class="text-lightSand text-mainSize font-medium leading-main">
+              Important info
+              <span class="hidden md:inline-block">regarding our service</span>
+            </h3>
+          </div>
+        </div>
+        <div>
+          <img src="icons/chevron-down.svg" alt="" />
+        </div>
+      </div>
+    </main>
+    <footer
+      class="container mx-auto flex flex-col bg-white text-mainSize font-bold leading-big font-footer border-t border-solid border-black md:flex-row-reverse md:justify-end"
+    >
+      <div
+        class="flex flex-col gap-y-12 pl-6 pt-6 md:flex-row md:pl-0 md:py-[85px] md:pr-[120px] md:w-full md: justify-between"
+      >
+        <div class="flex flex-col gap-y-[19px]">
+          <a href="">FAQ</a>
+          <a href="">RETURNS</a>
+          <a href="">CONTACT</a>
+        </div>
+        <div class="flex flex-col gap-y-[19px]">
+          <a href="">TERMS & CONDITIONS</a>
+          <a href="">PRIVACY POLICY</a>
+          <a href="">COOKIE POLICY</a>
+          <a href="">COOKIE SETTINGS</a>
+        </div>
+        <div class="flex flex-col gap-y-[19px]">
+          <a href="">ABOUT VOODOO</a>
+          <a href="">CAREER</a>
+          <a href="">FACEBOOK</a>
+          <a href="">INSTAGRAM</a>
+        </div>
+      </div>
+      <div class="self-center py-14 md:pl-[100px] md:pr-[133px]">
+        <img
+          src="/icons/logomark.svg"
+          alt=""
+          class="w-[80px] h-[80px] md:min-w-[82px] md:h-[82px]"
+        />
+      </div>
+    </footer>
+  </body>
+</html>
