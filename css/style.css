@@ -583,6 +583,10 @@ video {
   display: none;
 }
 
+.h-\[80px\] {
+  height: 80px;
+}
+
 .h-logomarkMobile {
   height: 23px;
 }
@@ -591,8 +595,8 @@ video {
   height: 48px;
 }
 
-.h-\[80px\] {
-  height: 80px;
+.w-\[80px\] {
+  width: 80px;
 }
 
 .w-logomarkMobile {
@@ -601,41 +605,6 @@ video {
 
 .w-logotypeMobile {
   width: 94px;
-}
-
-.w-\[80px\] {
-  width: 80px;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.w-auto {
-  width: auto;
-}
-
-.w-max {
-  width: -moz-max-content;
-  width: max-content;
-}
-
-.w-min {
-  width: -moz-min-content;
-  width: min-content;
-}
-
-.w-fit {
-  width: -moz-fit-content;
-  width: fit-content;
-}
-
-.shrink-0 {
-  flex-shrink: 0;
-}
-
-.grow-0 {
-  flex-grow: 0;
 }
 
 .flex-row {
@@ -652,10 +621,6 @@ video {
 
 .items-center {
   align-items: center;
-}
-
-.justify-end {
-  justify-content: flex-end;
 }
 
 .justify-between {
@@ -681,18 +646,8 @@ video {
   row-gap: 3rem;
 }
 
-.gap-x-12 {
-  -moz-column-gap: 3rem;
-       column-gap: 3rem;
-}
-
 .gap-y-\[19px\] {
   row-gap: 19px;
-}
-
-.gap-x-\[40px\] {
-  -moz-column-gap: 40px;
-       column-gap: 40px;
 }
 
 .self-center {
@@ -701,18 +656,6 @@ video {
 
 .rounded {
   border-radius: 0.25rem;
-}
-
-.border-4 {
-  border-width: 4px;
-}
-
-.border-b-2 {
-  border-bottom-width: 2px;
-}
-
-.border-b-4 {
-  border-bottom-width: 4px;
 }
 
 .border-b {
@@ -730,16 +673,6 @@ video {
 .border-black {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
-}
-
-.border-white {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity));
-}
-
-.border-indigo-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(99 102 241 / var(--tw-border-opacity));
 }
 
 .bg-backgroundColor {
@@ -774,32 +707,24 @@ video {
   padding-bottom: 26px;
 }
 
-.pt-6 {
-  padding-top: 1.5rem;
-}
-
-.pl-12 {
-  padding-left: 3rem;
-}
-
-.pt-12 {
-  padding-top: 3rem;
-}
-
 .pl-6 {
   padding-left: 1.5rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-center {
   text-align: center;
 }
 
-.font-main {
-  font-family: Space Grotesk, sans-serif;
-}
-
 .font-footer {
   font-family: Space Mono, monospace;
+}
+
+.font-main {
+  font-family: Space Grotesk, sans-serif;
 }
 
 .text-bigSize {
@@ -826,12 +751,12 @@ video {
   line-height: 1.25rem;
 }
 
-.leading-main {
-  line-height: 18px;
-}
-
 .leading-big {
   line-height: 21px;
+}
+
+.leading-main {
+  line-height: 18px;
 }
 
 .text-lightSand {
@@ -842,15 +767,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
-}
-
-.decoration-black {
-  text-decoration-color: #000;
 }
 
 @media (min-width: 768px) {
@@ -870,16 +786,12 @@ video {
     margin-top: 100px;
   }
 
-  .md\:mr-\[133px\] {
-    margin-right: 133px;
-  }
-
-  .md\:ml-\[110px\] {
-    margin-left: 110px;
-  }
-
   .md\:inline-block {
     display: inline-block;
+  }
+
+  .md\:h-\[82px\] {
+    height: 82px;
   }
 
   .md\:h-logomarkDecktop {
@@ -890,8 +802,8 @@ video {
     height: 98px;
   }
 
-  .md\:h-\[82px\] {
-    height: 82px;
+  .md\:w-full {
+    width: 100%;
   }
 
   .md\:w-logomarkDecktop {
@@ -900,14 +812,6 @@ video {
 
   .md\:w-logotypeDecktop {
     width: 192px;
-  }
-
-  .md\:w-\[82px\] {
-    width: 82px;
-  }
-
-  .md\:w-full {
-    width: 100%;
   }
 
   .md\:min-w-\[82px\] {
@@ -922,16 +826,13 @@ video {
     flex-direction: row-reverse;
   }
 
-  .md\:justify-start {
-    justify-content: flex-start;
-  }
-
   .md\:justify-end {
     justify-content: flex-end;
   }
 
-  .md\:justify-between {
-    justify-content: space-between;
+  .md\:gap-x-12 {
+    -moz-column-gap: 3rem;
+         column-gap: 3rem;
   }
 
   .md\:py-12 {
@@ -948,28 +849,16 @@ video {
     padding-left: 0px;
   }
 
+  .md\:pl-\[100px\] {
+    padding-left: 100px;
+  }
+
   .md\:pr-\[120px\] {
     padding-right: 120px;
   }
 
-  .md\:pl-\[110px\] {
-    padding-left: 110px;
-  }
-
   .md\:pr-\[133px\] {
     padding-right: 133px;
-  }
-
-  .md\:pr-\[110px\] {
-    padding-right: 110px;
-  }
-
-  .md\:pl-\[50px\] {
-    padding-left: 50px;
-  }
-
-  .md\:pl-\[100px\] {
-    padding-left: 100px;
   }
 
   .md\:text-desktopBig {
