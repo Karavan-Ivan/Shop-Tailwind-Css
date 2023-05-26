@@ -75,6 +75,34 @@
           <img src="icons/chevron-down.svg" alt="" />
         </div>
       </div>
+      <div class="grid grid-cols-1 md:grid-cols-4">
+        <div
+          class="cards grid col-span-4 grid-cols-1 gap-y-12 md:grid-cols-4 md:gap-x-6"
+        ></div>
+        <div
+          class="flex flex-col col-span-2 col-start-2 items-center gap-y-6 pt-[98px] pb-[127px]"
+        >
+          <div>
+            <h2
+              class="text-mainSize leading-main md:text-desktopBig md:leading-desktopBig font-normal text-black"
+            >
+              Be the first one to know when we launch our beta!
+            </h2>
+          </div>
+          <div class="flex justify-center max-h-[43px] w-full">
+            <input
+              type="text"
+              placeholder="E-mail"
+              class="bg-white mr-3 w-full placeholder:text-black placeholder:text-bigSize placeholder:font-semibold placeholder:leading-5 p-4"
+            />
+            <button
+              class="bg-[#ED5E21] rounded text-bigSize leading-5 font-semibold w-[94px] shrink-0"
+            >
+              Sing-up
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
     <footer
       class="container mx-auto flex flex-col bg-white text-mainSize font-bold leading-big font-footer border-t border-solid border-black md:flex-row-reverse md:justify-end"
@@ -108,5 +136,6 @@
         />
       </div>
     </footer>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>
