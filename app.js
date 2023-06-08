@@ -25,6 +25,7 @@ axios
             price: product.price,
             size: product.option1,
             color: product.option2,
+            product_id: product.product_id,
           },
         }),
         {}
@@ -35,6 +36,7 @@ axios
         (object, product) => ({
           ...object,
           [product.id]: {
+            id: product.id,
             title: product.title,
             variants: getProductsObjectVariantsPrice(product.variants),
             image: product.images.map((el) => el.src),
@@ -49,39 +51,24 @@ axios
     console.log(productsObject);
     console.log(productVariants);
 
-    function includeSizeM(array) {
-      if (array.includes("m")) {
-        return "orange-200";
-      } else {
-        return "white";
+    function includeSize(array, size) {
+      switch (array.includes(size)) {
+        case true:
+          return "";
+          break;
+        default:
+          return "notAvailable";
+          break;
       }
     }
-    function includeSizeXS(array) {
-      if (array.includes("xs")) {
-        return "orange-200";
-      } else {
-        return "white";
-      }
-    }
-    function includeSizeS(array) {
-      if (array.includes("s")) {
-        return "orange-200";
-      } else {
-        return "white";
-      }
-    }
-    function includeSizeL(array) {
-      if (array.includes("l")) {
-        return "orange-200";
-      } else {
-        return "white";
-      }
-    }
-    function includeSizeXL(array) {
-      if (array.includes("xl")) {
-        return "orange-200";
-      } else {
-        return "white";
+    function includeColor(array, color) {
+      switch (array.includes(color)) {
+        case true:
+          return "";
+          break;
+        default:
+          return "notAvailable";
+          break;
       }
     }
 
@@ -100,7 +87,7 @@ axios
       <div class="product-info flex justify-between">
         <div class="text-mainSize font-bold leading-main">
           <h3>${productVariants[productId].title}</h3>
-          <h3>price</h3>
+          
         </div>
         <div class="text-mainSize leading-main">
           <h3 class="font-normal">condition</h3>
@@ -110,58 +97,223 @@ axios
       <button class="bg-black text-white text-mainSize font-bold leading-main rounded w-full py-4">
         PICK-UP IN <span class="underline decoration-white">2200</span>
       </button>
-      <div class="flex flex-col gap-y-6 pt-4">
+      <div class="buttonsBlock flex flex-col gap-y-6 pt-4">
       <div class="buttonSize grid grid-cols-3 gap-2.5">
         <button
-          class="size active bg-${includeSizeXS(
-            productsObject[productId].variants.map((el) => el.option1)
-          )} rounded w-max-[60px] h-[30px] text-black text-mainSize leading-main font-normal"
-          value="xs"
+          class="activeSize size ${includeSize(
+            productsObject[productId].variants.map((el) => el.option1),
+            "xs"
+          )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
+          value="xs" id='${productVariants[productId].id}' data-id='${
+          "xs-" + productVariants[productId].id
+        }'
         >
           XS
         </button>
         <button
-          class="size bg-${includeSizeS(
-            productsObject[productId].variants.map((el) => el.option1)
-          )} rounded w-max-[60px] h-[30px] text-black text-mainSize leading-main font-normal"
+          class="disabled size ${includeSize(
+            productsObject[productId].variants.map((el) => el.option1),
+            "s"
+          )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
+          value="s" id='${productVariants[productId].id}' data-id='${
+          "s-" + productVariants[productId].id
+        }'
         >
           S
         </button>
         <button
-          class="size bg-${includeSizeM(
-            productsObject[productId].variants.map((el) => el.option1)
-          )} rounded w-max-[60px] h-[30px] text-black text-mainSize leading-main font-normal"
+          class="disabled size ${includeSize(
+            productsObject[productId].variants.map((el) => el.option1),
+            "m"
+          )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
+          value="m" id='${productVariants[productId].id}' data-id='${
+          "m-" + productVariants[productId].id
+        }'
         >
           M
         </button>
         <button
-          class="size bg-${includeSizeL(
-            productsObject[productId].variants.map((el) => el.option1)
-          )} rounded w-max-[60px] h-[30px] text-black text-mainSize leading-main font-normal"
+          class="disabled size ${includeSize(
+            productsObject[productId].variants.map((el) => el.option1),
+            "l"
+          )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
+          value="l" id='${productVariants[productId].id}' data-id='${
+          "l-" + productVariants[productId].id
+        }'
         >
           L
         </button>
         <button
-          class="size bg-${includeSizeXL(
-            productsObject[productId].variants.map((el) => el.option1)
-          )} rounded w-max-[60px] h-[30px] text-black text-mainSize leading-main font-normal"
+          class="disabled size ${includeSize(
+            productsObject[productId].variants.map((el) => el.option1),
+            "xl"
+          )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
+          value="xl" id='${productVariants[productId].id}' data-id='${
+          "xl-" + productVariants[productId].id
+        }'
         >
           XL
         </button>
       </div>
       <div class="buttonColor grid grid-cols-3 gap-2.5">
         <button
-          class="color active bg-orange-200 rounded w-max-[60px] h-[30px]  text-mainSize leading-main font-normal"
+          class="activeColor color ${includeColor(
+            productsObject[productId].variants.map((el) => el.option2),
+            "red"
+          )} rounded w-max-[60px] h-[30px]  text-mainSize leading-main font-normal "
+          value="red" id='${productVariants[productId].id}' data-id='${
+          "red-" + productVariants[productId].id
+        }'
         >
           Red
         </button>
         <button
-          class="color bg-orange-200 rounded w-max-[60px] h-[30px]  text-mainSize leading-main font-normal"
+          class="disabled color ${includeColor(
+            productsObject[productId].variants.map((el) => el.option2),
+            "blue"
+          )} rounded w-max-[60px] h-[30px]  text-mainSize leading-main font-normal "
+          value="blue" id='${productVariants[productId].id}' data-id='${
+          "blue-" + productVariants[productId].id
+        }'
         >
           Blue
         </button>
       </div>
     </div>
+    <h3>Price: ${Object.keys(productVariants[productId].variants)
+      .filter(
+        (elem) =>
+          productVariants[productId].variants[elem].color === "red" &&
+          productVariants[productId].variants[elem].size === "xs"
+      )
+      .map((el) => productVariants[productId].variants[el].price)}</h3>
     </div>`)
     );
+
+    function getPrice(id) {
+      let productValue;
+      const activeButtons = document.querySelectorAll(".activeColor");
+      const activeButtonsArr = Array.prototype.slice.call(activeButtons);
+      activeButtonsArr
+        .filter((el) => el.id === id)
+        .map((el) => (productValue = el.value));
+
+      console.log(productValue);
+    }
+
+    getPrice("8037746802969");
+
+    Object.keys(productVariants).map((productID) => {
+      const buttonColor = document.querySelectorAll(".buttonColor");
+      const buttonSize = document.querySelectorAll(".buttonSize");
+      const colorButtons = document.querySelectorAll(".color");
+      const sizeButtons = document.querySelectorAll(".size");
+
+      buttonColor.forEach((elem) => {
+        elem.addEventListener("click", (event) => {
+          const targetId = event.target.dataset.id;
+          switch (targetId) {
+            case `${"red-" + productVariants[productID].id}`:
+              getItems(
+                colorButtons,
+                `${"red-" + productVariants[productID].id}`,
+                productVariants[productID].id
+              );
+              break;
+            case `${"blue-" + productVariants[productID].id}`:
+              getItems(
+                colorButtons,
+                `${"blue-" + productVariants[productID].id}`,
+                productVariants[productID].id
+              );
+              break;
+          }
+        });
+      });
+
+      buttonSize.forEach((elem) => {
+        elem.addEventListener("click", (event) => {
+          const targetId = event.target.dataset.id;
+          switch (targetId) {
+            case `${"xs-" + productVariants[productID].id}`:
+              getItems(
+                sizeButtons,
+                `${"xs-" + productVariants[productID].id}`,
+                productVariants[productID].id
+              );
+              break;
+            case `${"s-" + productVariants[productID].id}`:
+              getItems(
+                sizeButtons,
+                `${"s-" + productVariants[productID].id}`,
+                productVariants[productID].id
+              );
+              break;
+            case `${"m-" + productVariants[productID].id}`:
+              getItems(
+                sizeButtons,
+                `${"m-" + productVariants[productID].id}`,
+                productVariants[productID].id
+              );
+              break;
+            case `${"l-" + productVariants[productID].id}`:
+              getItems(
+                sizeButtons,
+                `${"l-" + productVariants[productID].id}`,
+                productVariants[productID].id
+              );
+              break;
+            case `${"xl-" + productVariants[productID].id}`:
+              getItems(
+                sizeButtons,
+                `${"xl-" + productVariants[productID].id}`,
+                productVariants[productID].id
+              );
+              break;
+          }
+        });
+      });
+    });
+
+    function getItems(buttonsType, productDataId, productVariantId) {
+      buttonsType.forEach((item) => {
+        if (
+          !item.classList.contains("active") &&
+          item.dataset.id === productDataId &&
+          !item.classList.contains("notAvailable")
+        ) {
+          item.classList.remove("disabled");
+          item.classList.add("activeSize");
+        } else if (
+          item.id === `${productVariantId}` &&
+          !item.classList.contains("notAvailable")
+        ) {
+          item.classList.remove("activeSize");
+          item.classList.add("disabled");
+        }
+      });
+    }
+
+    const notAvailable = document.querySelectorAll(".notAvailable");
+    notAvailable.forEach((elem) => {
+      if (elem.classList.contains("color")) {
+        elem.addEventListener("click", () => {
+          alert("Товару у вибраному кольорі немає у наявності");
+        });
+      } else {
+        elem.addEventListener("click", () => {
+          alert("Товару у вибраному розмірі немає у наявності");
+        });
+      }
+    });
+
+    function productPriceColor() {
+      const testTest = document.querySelectorAll(".activeColor");
+      testTest.forEach((elem) => {
+        console.log({
+          [elem.id]: elem.value,
+        });
+      });
+    }
+    productPriceColor();
   });
