@@ -4,9 +4,9 @@ axios
   .get("https://voodoo-sandbox.myshopify.com/products.json?limit=12")
   .then((response) => {
     const result = response.data;
-    const productsCard = document.querySelector(".cards");
+    const productsCard = document.getElementById("productsCard");
     const productsArray = result.products;
-    const test = document.querySelector(".test");
+    const cards = document.querySelectorAll(".card");
 
     const getProductsObject = (array) =>
       array.reduce(
@@ -74,7 +74,9 @@ axios
 
     Object.keys(productVariants).map(
       (productId) =>
-        (productsCard.innerHTML += `<div class="card flex flex-col gap-3">
+        (productsCard.innerHTML += `<div class="card flex flex-col gap-3" id=${
+          "card-" + productVariants[productId].id
+        }>
       <div
         class="flex rounded bg-white bg-cover bg-no-repeat bg-center w-full h-[300px]  border border-solid border-black p-3"
       >
@@ -98,7 +100,7 @@ axios
         PICK-UP IN <span class="underline decoration-white">2200</span>
       </button>
       <div class="buttonsBlock flex flex-col gap-y-6 pt-4">
-      <div class="buttonSize grid grid-cols-3 gap-2.5">
+      <div class="buttonSize grid grid-cols-3 gap-2.5" id="buttonSize">
         <button
           class="activeSize size ${includeSize(
             productsObject[productId].variants.map((el) => el.option1),
@@ -155,7 +157,7 @@ axios
           XL
         </button>
       </div>
-      <div class="buttonColor grid grid-cols-3 gap-2.5">
+      <div class="buttonColor grid grid-cols-3 gap-2.5" id="buttonColor">
         <button
           class="activeColor color ${includeColor(
             productsObject[productId].variants.map((el) => el.option2),
@@ -180,28 +182,31 @@ axios
         </button>
       </div>
     </div>
-    <h3>Price: ${Object.keys(productVariants[productId].variants)
-      .filter(
-        (elem) =>
-          productVariants[productId].variants[elem].color === "red" &&
-          productVariants[productId].variants[elem].size === "xs"
-      )
-      .map((el) => productVariants[productId].variants[el].price)}</h3>
+    <h3 class="productPrice">${getPrice(productVariants[productId].id)}</h3>
     </div>`)
     );
 
-    function getPrice(id) {
-      let productValue;
-      const activeButtons = document.querySelectorAll(".activeColor");
-      const activeButtonsArr = Array.prototype.slice.call(activeButtons);
-      activeButtonsArr
-        .filter((el) => el.id === id)
-        .map((el) => (productValue = el.value));
+    // Price: ${Object.keys(productVariants[productId].variants)
+    //   .filter(
+    //     (elem) =>
+    //       productVariants[productId].variants[elem].color ===
+    //         getProductColor(productVariants[productId].id) &&
+    //       productVariants[productId].variants[elem].size === "xs"
+    //   )
+    //   .map((el) => productVariants[productId].variants[el].price)}
 
-      console.log(productValue);
-    }
+    // function getPrice(id) {
+    //   let productValue;
+    //   const activeButtons = document.querySelectorAll(".activeColor");
+    //   const activeButtonsArr = Array.prototype.slice.call(activeButtons);
+    //   activeButtonsArr
+    //     .filter((el) => el.id === id)
+    //     .map((el) => (productValue = el.value));
 
-    getPrice("8037746802969");
+    //   console.log(productValue);
+    // }
+
+    // getPrice("8037746802969");
 
     Object.keys(productVariants).map((productID) => {
       const buttonColor = document.querySelectorAll(".buttonColor");
@@ -273,25 +278,72 @@ axios
           }
         });
       });
+
+      function getItems(buttonsType, productDataId, productVariantId) {
+        buttonsType.forEach((item) => {
+          if (
+            !item.classList.contains("active") &&
+            item.dataset.id === productDataId &&
+            !item.classList.contains("notAvailable")
+          ) {
+            item.classList.remove("disabled");
+            item.classList.add("activeSize");
+          } else if (
+            item.id === `${productVariantId}` &&
+            !item.classList.contains("notAvailable")
+          ) {
+            item.classList.remove("activeSize");
+            item.classList.add("disabled");
+          }
+        });
+      }
+
+      // const desiredCard = document.getElementById(
+      //   `${"card-" + productVariants[productID].id}`
+      // );
+      // const activeColorButton = desiredCard.querySelector(".activeColor");
+      // const activeSizeButton = desiredCard.querySelector(".activeSize");
+      // const productPrice = desiredCard.querySelector(".productPrice");
+
+      // Object.keys(productVariants[productID].variants).map((el) => {
+      //   if (
+      //     productVariants[productID].variants[el].color ===
+      //       activeColorButton.value &&
+      //     productVariants[productID].variants[el].size ===
+      //       activeSizeButton.value
+      //   ) {
+      //     productPrice.innerHTML += `${productVariants[productID].variants[el].price}`;
+      //   } else {
+      //     productPrice.innerHTML += `-`;
+      //   }
+      // });
     });
 
-    function getItems(buttonsType, productDataId, productVariantId) {
-      buttonsType.forEach((item) => {
-        if (
-          !item.classList.contains("active") &&
-          item.dataset.id === productDataId &&
-          !item.classList.contains("notAvailable")
-        ) {
-          item.classList.remove("disabled");
-          item.classList.add("activeSize");
-        } else if (
-          item.id === `${productVariantId}` &&
-          !item.classList.contains("notAvailable")
-        ) {
-          item.classList.remove("activeSize");
-          item.classList.add("disabled");
+    function getPrice(id) {
+      const sizeButtonsTest = document.querySelectorAll(".size.activeSize");
+      const colorButtonsTest = document.querySelectorAll(".color.activeColor");
+
+      const activeSize = Array.from(sizeButtonsTest).find(
+        (button) => button.dataset.id === `${button.value + "-" + id}`
+      );
+      const activeColor = Array.from(colorButtonsTest).find(
+        (button) => button.dataset.id === `${button.value + "-" + id}`
+      );
+
+      if (activeSize && activeColor) {
+        const size = activeSize.value;
+        const color = activeColor.value;
+
+        const variant = productVariants[id].variants.find(
+          (variant) => variant.size === size && variant.color === color
+        );
+
+        if (variant) {
+          return variant.price;
         }
-      });
+      }
+
+      return "0"; // Если вариант с заданными параметрами не найден, вернуть пустую строку
     }
 
     const notAvailable = document.querySelectorAll(".notAvailable");
@@ -306,14 +358,4 @@ axios
         });
       }
     });
-
-    function productPriceColor() {
-      const testTest = document.querySelectorAll(".activeColor");
-      testTest.forEach((elem) => {
-        console.log({
-          [elem.id]: elem.value,
-        });
-      });
-    }
-    productPriceColor();
   });
