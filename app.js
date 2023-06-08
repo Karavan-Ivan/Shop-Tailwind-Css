@@ -6,7 +6,7 @@ axios
     const result = response.data;
     const productsCard = document.getElementById("productsCard");
     const productsArray = result.products;
-    const cards = document.querySelectorAll(".card");
+    let cards = document.querySelectorAll(".card");
 
     const getProductsObject = (array) =>
       array.reduce(
@@ -72,11 +72,10 @@ axios
       }
     }
 
-    Object.keys(productVariants).map(
-      (productId) =>
-        (productsCard.innerHTML += `<div class="card flex flex-col gap-3" id=${
-          "card-" + productVariants[productId].id
-        }>
+    Object.keys(productVariants).map((productId) => {
+      productsCard.innerHTML += `<div class="card flex flex-col gap-3" id=${
+        "card-" + productVariants[productId].id
+      }>
       <div
         class="flex rounded bg-white bg-cover bg-no-repeat bg-center w-full h-[300px]  border border-solid border-black p-3"
       >
@@ -107,8 +106,8 @@ axios
             "xs"
           )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
           value="xs" id='${productVariants[productId].id}' data-id='${
-          "xs-" + productVariants[productId].id
-        }'
+        "xs-" + productVariants[productId].id
+      }' 
         >
           XS
         </button>
@@ -118,9 +117,9 @@ axios
             "s"
           )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
           value="s" id='${productVariants[productId].id}' data-id='${
-          "s-" + productVariants[productId].id
-        }'
-        >
+        "s-" + productVariants[productId].id
+      }' 
+        > 
           S
         </button>
         <button
@@ -129,8 +128,8 @@ axios
             "m"
           )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
           value="m" id='${productVariants[productId].id}' data-id='${
-          "m-" + productVariants[productId].id
-        }'
+        "m-" + productVariants[productId].id
+      }' 
         >
           M
         </button>
@@ -140,8 +139,8 @@ axios
             "l"
           )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
           value="l" id='${productVariants[productId].id}' data-id='${
-          "l-" + productVariants[productId].id
-        }'
+        "l-" + productVariants[productId].id
+      }' 
         >
           L
         </button>
@@ -151,8 +150,8 @@ axios
             "xl"
           )} rounded w-max-[60px] h-[30px] text-mainSize leading-main font-normal"
           value="xl" id='${productVariants[productId].id}' data-id='${
-          "xl-" + productVariants[productId].id
-        }'
+        "xl-" + productVariants[productId].id
+      }' 
         >
           XL
         </button>
@@ -164,8 +163,8 @@ axios
             "red"
           )} rounded w-max-[60px] h-[30px]  text-mainSize leading-main font-normal "
           value="red" id='${productVariants[productId].id}' data-id='${
-          "red-" + productVariants[productId].id
-        }'
+        "red-" + productVariants[productId].id
+      }' 
         >
           Red
         </button>
@@ -175,16 +174,16 @@ axios
             "blue"
           )} rounded w-max-[60px] h-[30px]  text-mainSize leading-main font-normal "
           value="blue" id='${productVariants[productId].id}' data-id='${
-          "blue-" + productVariants[productId].id
-        }'
+        "blue-" + productVariants[productId].id
+      }' 
         >
           Blue
         </button>
       </div>
     </div>
     <h3 class="productPrice"></h3>
-    </div>`)
-    );
+    </div>`;
+    });
 
     // Price: ${Object.keys(productVariants[productId].variants)
     //   .filter(
@@ -298,25 +297,75 @@ axios
         });
       }
 
+      // const desiredCard = document.getElementById(
+      //   `${"card-" + productVariants[productID].id}`
+      // );
+      // const activeColorButton = desiredCard.querySelector(".activeColor");
+      // const activeSizeButton = desiredCard.querySelector(".activeSize");
+      // const productPrice = desiredCard.querySelector(".productPrice");
+
+      // Object.keys(productVariants[productID].variants).map((el) => {
+      //   if (
+      //     productVariants[productID].variants[el].color ===
+      //       activeColorButton.value &&
+      //     productVariants[productID].variants[el].size ===
+      //       activeSizeButton.value
+      //   ) {
+      //     productPrice.innerHTML += `${productVariants[productID].variants[el].price}`;
+      //   } else {
+      //     productPrice.innerHTML += `-`;
+      //   }
+      // });
+
       const desiredCard = document.getElementById(
         `${"card-" + productVariants[productID].id}`
       );
-      const activeColorButton = desiredCard.querySelector(".activeColor");
-      const activeSizeButton = desiredCard.querySelector(".activeSize");
-      const productPrice = desiredCard.querySelector(".productPrice");
+      const colorButtonsTest = desiredCard.querySelectorAll(".color");
+      const sizeButtonsTest = desiredCard.querySelectorAll(".size");
+      const productPriceTest = desiredCard.querySelector(".productPrice");
 
-      Object.keys(productVariants[productID].variants).map((el) => {
-        if (
-          productVariants[productID].variants[el].color ===
-            activeColorButton.value &&
-          productVariants[productID].variants[el].size ===
-            activeSizeButton.value
-        ) {
-          productPrice.innerHTML += `${productVariants[productID].variants[el].price}`;
+      function updateProductPrice() {
+        const activeColorButton = desiredCard.querySelector(".activeColor");
+        const activeSizeButton = desiredCard.querySelector(".activeSize");
+        const productId = productVariants[productID].id;
+
+        const selectedVariant = Object.values(
+          productVariants[productID].variants
+        ).find(
+          (variant) =>
+            variant.color === activeColorButton.value &&
+            variant.size === activeSizeButton.value
+        );
+
+        if (selectedVariant) {
+          productPriceTest.textContent = `${
+            "Price:" + " " + Math.trunc(selectedVariant.price) + "$"
+          }`;
         } else {
-          productPrice.innerHTML += `-`;
+          productPriceTest.textContent = "Not available";
         }
+      }
+
+      colorButtonsTest.forEach((button) => {
+        button.addEventListener("click", () => {
+          colorButtonsTest.forEach((btn) =>
+            btn.classList.remove("activeColor")
+          );
+          button.classList.add("activeColor");
+          updateProductPrice();
+        });
       });
+
+      sizeButtonsTest.forEach((button) => {
+        button.addEventListener("click", () => {
+          sizeButtonsTest.forEach((btn) => btn.classList.remove("activeSize"));
+          button.classList.add("activeSize");
+          updateProductPrice();
+        });
+      });
+
+      // Вызов функции для инициализации начальной цены
+      updateProductPrice();
     });
 
     const notAvailable = document.querySelectorAll(".notAvailable");
