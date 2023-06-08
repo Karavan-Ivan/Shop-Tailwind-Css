@@ -182,7 +182,7 @@ axios
         </button>
       </div>
     </div>
-    <h3 class="productPrice">${getPrice(productVariants[productId].id)}</h3>
+    <h3 class="productPrice"></h3>
     </div>`)
     );
 
@@ -298,53 +298,26 @@ axios
         });
       }
 
-      // const desiredCard = document.getElementById(
-      //   `${"card-" + productVariants[productID].id}`
-      // );
-      // const activeColorButton = desiredCard.querySelector(".activeColor");
-      // const activeSizeButton = desiredCard.querySelector(".activeSize");
-      // const productPrice = desiredCard.querySelector(".productPrice");
-
-      // Object.keys(productVariants[productID].variants).map((el) => {
-      //   if (
-      //     productVariants[productID].variants[el].color ===
-      //       activeColorButton.value &&
-      //     productVariants[productID].variants[el].size ===
-      //       activeSizeButton.value
-      //   ) {
-      //     productPrice.innerHTML += `${productVariants[productID].variants[el].price}`;
-      //   } else {
-      //     productPrice.innerHTML += `-`;
-      //   }
-      // });
-    });
-
-    function getPrice(id) {
-      const sizeButtonsTest = document.querySelectorAll(".size.activeSize");
-      const colorButtonsTest = document.querySelectorAll(".color.activeColor");
-
-      const activeSize = Array.from(sizeButtonsTest).find(
-        (button) => button.dataset.id === `${button.value + "-" + id}`
+      const desiredCard = document.getElementById(
+        `${"card-" + productVariants[productID].id}`
       );
-      const activeColor = Array.from(colorButtonsTest).find(
-        (button) => button.dataset.id === `${button.value + "-" + id}`
-      );
+      const activeColorButton = desiredCard.querySelector(".activeColor");
+      const activeSizeButton = desiredCard.querySelector(".activeSize");
+      const productPrice = desiredCard.querySelector(".productPrice");
 
-      if (activeSize && activeColor) {
-        const size = activeSize.value;
-        const color = activeColor.value;
-
-        const variant = productVariants[id].variants.find(
-          (variant) => variant.size === size && variant.color === color
-        );
-
-        if (variant) {
-          return variant.price;
+      Object.keys(productVariants[productID].variants).map((el) => {
+        if (
+          productVariants[productID].variants[el].color ===
+            activeColorButton.value &&
+          productVariants[productID].variants[el].size ===
+            activeSizeButton.value
+        ) {
+          productPrice.innerHTML += `${productVariants[productID].variants[el].price}`;
+        } else {
+          productPrice.innerHTML += `-`;
         }
-      }
-
-      return "0"; // Если вариант с заданными параметрами не найден, вернуть пустую строку
-    }
+      });
+    });
 
     const notAvailable = document.querySelectorAll(".notAvailable");
     notAvailable.forEach((elem) => {
