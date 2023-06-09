@@ -6,7 +6,6 @@ axios
     const result = response.data;
     const productsCard = document.getElementById("productsCard");
     const productsArray = result.products;
-    let cards = document.querySelectorAll(".card");
 
     const getProductsObject = (array) =>
       array.reduce(
@@ -26,6 +25,7 @@ axios
             size: product.option1,
             color: product.option2,
             product_id: product.product_id,
+            weight: product.grams,
           },
         }),
         {}
@@ -85,14 +85,14 @@ axios
           USED
         </button>
       </div>
-      <div class="product-info flex justify-between">
-        <div class="text-mainSize font-bold leading-main">
+      <div class="product-info flex flex-col gap-3">
+        <div class="text-bigSize font-bold leading-main h-9">
           <h3>${productVariants[productId].title}</h3>
           
         </div>
-        <div class="text-mainSize leading-main">
-          <h3 class="font-normal">condition</h3>
-          <h3 class="font-medium">rating</h3>
+        <hr>
+        <div class="font-bold text-mainSize leading-main">
+          <h3 class="weight"></h3>
         </div>
       </div>
       <button class="bg-black text-white text-mainSize font-bold leading-main rounded w-full py-4">
@@ -100,6 +100,9 @@ axios
       </button>
       <div class="buttonsBlock flex flex-col gap-y-6 pt-4">
       <div class="buttonSize grid grid-cols-3 gap-2.5" id="buttonSize">
+      <div class="flex items-center bigSize leading-main font-bold">
+      <h3>Sizes:</h3>
+      </div>
         <button
           class="activeSize size ${includeSize(
             productsObject[productId].variants.map((el) => el.option1),
@@ -157,6 +160,9 @@ axios
         </button>
       </div>
       <div class="buttonColor grid grid-cols-3 gap-2.5" id="buttonColor">
+      <div class="flex items-center text-bigSize leading-main font-bold">
+      <h3>Colors:</h3>
+      </div>
         <button
           class="activeColor color ${includeColor(
             productsObject[productId].variants.map((el) => el.option2),
@@ -181,153 +187,24 @@ axios
         </button>
       </div>
     </div>
-    <h3 class="productPrice"></h3>
+    <div class="border-double border-4 border-black bg-white rounded-3xl text-center max-w-fit py-2 px-8 self-center mt-3">
+    <h3 class="productPrice text-bigSize leading-main font-bold "></h3>
+    </div>
     </div>`;
     });
 
-    // Price: ${Object.keys(productVariants[productId].variants)
-    //   .filter(
-    //     (elem) =>
-    //       productVariants[productId].variants[elem].color ===
-    //         getProductColor(productVariants[productId].id) &&
-    //       productVariants[productId].variants[elem].size === "xs"
-    //   )
-    //   .map((el) => productVariants[productId].variants[el].price)}
-
-    // function getPrice(id) {
-    //   let productValue;
-    //   const activeButtons = document.querySelectorAll(".activeColor");
-    //   const activeButtonsArr = Array.prototype.slice.call(activeButtons);
-    //   activeButtonsArr
-    //     .filter((el) => el.id === id)
-    //     .map((el) => (productValue = el.value));
-
-    //   console.log(productValue);
-    // }
-
-    // getPrice("8037746802969");
-
     Object.keys(productVariants).map((productID) => {
-      const buttonColor = document.querySelectorAll(".buttonColor");
-      const buttonSize = document.querySelectorAll(".buttonSize");
-      const colorButtons = document.querySelectorAll(".color");
-      const sizeButtons = document.querySelectorAll(".size");
-
-      buttonColor.forEach((elem) => {
-        elem.addEventListener("click", (event) => {
-          const targetId = event.target.dataset.id;
-          switch (targetId) {
-            case `${"red-" + productVariants[productID].id}`:
-              getItems(
-                colorButtons,
-                `${"red-" + productVariants[productID].id}`,
-                productVariants[productID].id
-              );
-              break;
-            case `${"blue-" + productVariants[productID].id}`:
-              getItems(
-                colorButtons,
-                `${"blue-" + productVariants[productID].id}`,
-                productVariants[productID].id
-              );
-              break;
-          }
-        });
-      });
-
-      buttonSize.forEach((elem) => {
-        elem.addEventListener("click", (event) => {
-          const targetId = event.target.dataset.id;
-          switch (targetId) {
-            case `${"xs-" + productVariants[productID].id}`:
-              getItems(
-                sizeButtons,
-                `${"xs-" + productVariants[productID].id}`,
-                productVariants[productID].id
-              );
-              break;
-            case `${"s-" + productVariants[productID].id}`:
-              getItems(
-                sizeButtons,
-                `${"s-" + productVariants[productID].id}`,
-                productVariants[productID].id
-              );
-              break;
-            case `${"m-" + productVariants[productID].id}`:
-              getItems(
-                sizeButtons,
-                `${"m-" + productVariants[productID].id}`,
-                productVariants[productID].id
-              );
-              break;
-            case `${"l-" + productVariants[productID].id}`:
-              getItems(
-                sizeButtons,
-                `${"l-" + productVariants[productID].id}`,
-                productVariants[productID].id
-              );
-              break;
-            case `${"xl-" + productVariants[productID].id}`:
-              getItems(
-                sizeButtons,
-                `${"xl-" + productVariants[productID].id}`,
-                productVariants[productID].id
-              );
-              break;
-          }
-        });
-      });
-
-      function getItems(buttonsType, productDataId, productVariantId) {
-        buttonsType.forEach((item) => {
-          if (
-            !item.classList.contains("active") &&
-            item.dataset.id === productDataId &&
-            !item.classList.contains("notAvailable")
-          ) {
-            item.classList.remove("disabled");
-            item.classList.add("activeSize");
-          } else if (
-            item.id === `${productVariantId}` &&
-            !item.classList.contains("notAvailable")
-          ) {
-            item.classList.remove("activeSize");
-            item.classList.add("disabled");
-          }
-        });
-      }
-
-      // const desiredCard = document.getElementById(
-      //   `${"card-" + productVariants[productID].id}`
-      // );
-      // const activeColorButton = desiredCard.querySelector(".activeColor");
-      // const activeSizeButton = desiredCard.querySelector(".activeSize");
-      // const productPrice = desiredCard.querySelector(".productPrice");
-
-      // Object.keys(productVariants[productID].variants).map((el) => {
-      //   if (
-      //     productVariants[productID].variants[el].color ===
-      //       activeColorButton.value &&
-      //     productVariants[productID].variants[el].size ===
-      //       activeSizeButton.value
-      //   ) {
-      //     productPrice.innerHTML += `${productVariants[productID].variants[el].price}`;
-      //   } else {
-      //     productPrice.innerHTML += `-`;
-      //   }
-      // });
-
       const desiredCard = document.getElementById(
         `${"card-" + productVariants[productID].id}`
       );
-      const colorButtonsTest = desiredCard.querySelectorAll(".color");
-      const sizeButtonsTest = desiredCard.querySelectorAll(".size");
-      const productPriceTest = desiredCard.querySelector(".productPrice");
+      const colorButtonsInCard = desiredCard.querySelectorAll(".color");
+      const sizeButtonsInCard = desiredCard.querySelectorAll(".size");
+      const productPrice = desiredCard.querySelector(".productPrice");
+      const productWeight = desiredCard.querySelector(".weight");
 
-      function updateProductPrice() {
+      function updateProductPriceAndWeight() {
         const activeColorButton = desiredCard.querySelector(".activeColor");
         const activeSizeButton = desiredCard.querySelector(".activeSize");
-        const productId = productVariants[productID].id;
 
         const selectedVariant = Object.values(
           productVariants[productID].variants
@@ -338,34 +215,41 @@ axios
         );
 
         if (selectedVariant) {
-          productPriceTest.textContent = `${
-            "Price:" + " " + Math.trunc(selectedVariant.price) + "$"
+          productPrice.textContent = `${
+            "Price: " + Math.trunc(selectedVariant.price) + "$"
+          }`;
+          productWeight.textContent = `${
+            "Weight: " + selectedVariant.weight / 1000 + "kg"
           }`;
         } else {
-          productPriceTest.textContent = "Not available";
+          productPrice.textContent = "Not available";
+          productWeight.textContent = "Weight: -";
         }
       }
 
-      colorButtonsTest.forEach((button) => {
+      colorButtonsInCard.forEach((button) => {
         button.addEventListener("click", () => {
-          colorButtonsTest.forEach((btn) =>
-            btn.classList.remove("activeColor")
-          );
+          colorButtonsInCard.forEach((btn) => {
+            btn.classList.remove("activeColor"), btn.classList.add("disabled");
+          });
           button.classList.add("activeColor");
-          updateProductPrice();
+          button.classList.remove("disabled");
+          updateProductPriceAndWeight();
         });
       });
 
-      sizeButtonsTest.forEach((button) => {
+      sizeButtonsInCard.forEach((button) => {
         button.addEventListener("click", () => {
-          sizeButtonsTest.forEach((btn) => btn.classList.remove("activeSize"));
+          sizeButtonsInCard.forEach((btn) => {
+            btn.classList.remove("activeSize"), btn.classList.add("disabled");
+          });
           button.classList.add("activeSize");
-          updateProductPrice();
+          button.classList.remove("disabled");
+          updateProductPriceAndWeight();
         });
       });
 
-      // Вызов функции для инициализации начальной цены
-      updateProductPrice();
+      updateProductPriceAndWeight();
     });
 
     const notAvailable = document.querySelectorAll(".notAvailable");
